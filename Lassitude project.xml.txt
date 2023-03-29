@@ -1,0 +1,216 @@
+<?xml version="1.0"encoding="UTF-8"?>
+	<projectDescription>
+	<name>AutomatedDriverDrowsinessControl</name>
+	<comment>Project AutomatedDriverDrowsinessControl created by Buildship.</comment>
+	<projects>
+	</projects>
+	<buildSpec>
+	<buildCommand>
+	<name>org.eclipse.buildship.core.gradleprojectbuilder</name>
+	<arguments>
+	</arguments>
+	</buildCommand>
+	</buildSpec>
+	<natures>
+	<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
+	</natures>
+	<filteredResources>
+	<filter>
+	<id>1635143105820</id>
+	<name></name>
+	<type>30</type>
+	<matcher>
+	<id>org.eclipse.core.resources.regexFilterMatcher</id>
+	<arguments>node_modules|.git|__CREATED_BY_JAVA_LANGUAGE_SERVER__</arguments>
+	</matcher>
+	</filter>
+	</filteredResources>
+	</projectDescription>
+
+<?xml version="1.0" encoding="UTF-8"?>
+	<project version="4">
+	<component name="VcsDirectoryMappings">
+	<mapping directory="$PROJECT_DIR$" vcs="Git" />
+	</component>
+	</project>
+.
+package p001br.com.bloder.magic;
+
+import android.view.View;
+import p001br.com.bloder.magic.internal.MagicAnimation;
+
+/* renamed from: br.com.bloder.magic.Magic */
+public class Magic {
+public void doWith(View button) {
+MagicAnimation animator = new MagicAnimation(button);
+animator.setDuration(200);
+button.startAnimation(animator);
+}
+}
+
+intent-filter>
+<action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+<action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+<category android:name="com.example.hardik.automateddriverdrowsinesscontrol"/>
+</intent-filter>
+</receiver>
+<receiver android:name="com.google.firebase.iid.FirebaseInstanceIdInternalReceiver" android:exported="false"/>
+<service android:name="com.google.firebase.iid.FirebaseInstanceIdService" android:exported="true">
+<intent-filter android:priority="-500">
+<action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+</intent-filter>
+</service>
+<provider android:name="com.google.firebase.provider.FirebaseInitProvider" android:exported="false" android:authorities="com.example.hardik.automateddriverdrowsinesscontrol.firebaseinitprovider" android:initOrder="100"/>
+<meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+</application>
+</manifest>
+<action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+<action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+<category android:name="com.example.hardik.automateddriverdrowsinesscontrol"/>
+</intent-filter>
+</receiver>
+<receiver android:name="com.google.firebase.iid.FirebaseInstanceIdInternalReceiver" android:exported="false"/>
+<service android:name="com.google.firebase.iid.FirebaseInstanceIdService" android:exported="true">
+<intent-filter android:priority="-500">
+<action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+</intent-filter>
+</service>
+<provider android:name="com.google.firebase.provider.FirebaseInitProvider" android:exported="false" android:authorities="com.example.hardik.automateddriverdrowsinesscontrol.firebaseinitprovider" android:initOrder="100"/>
+<meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+</application>
+</manifest>
+[10:55 am, 25/11/2022] Praveen: package com.example.hardik.automateddriverdrowsinesscontrol;
+
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import androidx.core.internal.view.SupportMenu;
+import androidx.core.view.InputDeviceCompat;
+import com.example.hardik.automateddriverdrowsinesscontrol.camera.GraphicOverlay;
+import com.google.android.gms.vision.face.Face;
+
+class FaceGraphic extends GraphicOverlay.Graphic {
+private static final float BOX_STROKE_WIDTH = 5.0f;
+private static final int[] COLOR_CHOICES = {-16776961, -16711681, -16711936, -65281, SupportMenu.CATEGORY_MASK, -1, InputDeviceCompat.SOURCE_ANY};
+private static final float FACE_POSITION_RADIUS = 10.0f;
+private static final float ID_TEXT_SIZE = 40.0f;
+private static final float ID_X_OFFSET = -50.0f;
+private static final float ID_Y_OFFSET = 50.0f;
+private static int mCurrentColorIndex = 0;
+private Paint mBoxPaint;
+private volatile Face mFace;
+private float mFaceHappiness;
+private int mFaceId;
+private Paint mFacePositionPaint;
+private Paint mIdPaint;
+
+FaceGraphic(GraphicOverlay overlay) {
+super(overlay);
+int[] iArr = COLOR_CHOICES;
+int length = (mCurrentColorIndex + 1) % iArr.length;
+mCurrentColorIndex = length;
+int selectedColor = iArr[length];
+Paint paint = new Paint();
+this.mFacePositionPaint = paint;
+paint.setColor(selectedColor);
+Paint paint2 = new Paint();
+this.mIdPaint = paint2;
+paint2.setColor(selectedColor);
+this.mIdPaint.setTextSize(ID_TEXT_SIZE);
+Paint paint3 = new Paint();
+this.mBoxPaint = paint3;
+paint3.setColor(selectedColor);
+this.mBoxPaint.setStyle(Paint.Style.STROKE);
+this.mBoxPaint.setStrokeWidth(BOX_STROKE_WIDTH);
+}
+
+/* access modifiers changed from: package-private */
+public void setId(int id) {
+this.mFaceId = id;
+}
+
+/* access modifiers changed from: package-private */
+public void updateFace(Face face) {
+this.mFace = face;
+postInvalidate();
+}
+
+public void draw(Canvas canvas) {
+Canvas canvas2 = canvas;
+Face face = this.mFace;
+if (face != null) {
+float x = translateX(face.getPosition().x + (face.getWidth() / 2.0f));
+float y = translateY(face.getPosition().y + (face.getHeight() / 2.0f));
+canvas2.drawCircle(x, y, FACE_POSITION_RADIUS, this.mFacePositionPaint);
+canvas2.drawText("id: " + this.mFaceId, ID_X_OFFSET + x, 50.0f + y, this.mIdPaint);
+float xOffset = scaleX(face.getWidth() / 2.0f);
+float yOffset = scaleY(face.getHeight() / 2.0f);
+canvas.drawRect(x - xOffset, y - yOffset, x + xOffset, y + yOffset, this.mBoxPaint);
+}
+}
+}
+com.example.hardik.automateddriverdrowsinesscontrol;
+
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import androidx.core.internal.view.SupportMenu;
+import androidx.core.view.InputDeviceCompat;
+import com.example.hardik.automateddriverdrowsinesscontrol.camera.GraphicOverlay;
+import com.google.android.gms.vision.face.Face;
+
+class FaceGraphic extends GraphicOverlay.Graphic {
+private static final float BOX_STROKE_WIDTH = 5.0f;
+private static final int[] COLOR_CHOICES = {-16776961, -16711681, -16711936, -65281, SupportMenu.CATEGORY_MASK, -1, InputDeviceCompat.SOURCE_ANY};
+private static final float FACE_POSITION_RADIUS = 10.0f;
+private static final float ID_TEXT_SIZE = 40.0f;
+private static final float ID_X_OFFSET = -5…
+[11:02 am, 25/11/2022] Praveen: package com.example.hardik.automateddriverdrowsinesscontrol;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+import java.text.DateFormat;
+import java.util.Date;
+
+public class EndActivity extends AppCompatActivity {
+
+/* renamed from: a */
+TextView f0a;
+
+/* renamed from: b */
+TextView f1b;
+
+/* renamed from: c */
+TextView f2c;
+private String key = "facetrackeractivity";
+private String key_3 = "hello";
+Button proceed;
+
+/* access modifiers changed from: protected */
+public void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState);
+setContentView((int) C0149R.layout.activity_end);
+this.proceed = (Button) findViewById(C0149R.C0152id.button2);
+this.f0a = (TextView) findViewById(C0149R.C0152id.textView10);
+this.f1b = (TextView) findViewById(C0149R.C0152id.textView11);
+this.f2c = (TextView) findViewById(C0149R.C0152id.textView9);
+this.proceed.setOnTouchListener(new View.OnTouchListener() {
+public boolean onTouch(View v, MotionEvent event) {
+Intent next = new Intent(EndActivity.this, MainActivity.class);
+next.addFlags(268468224);
+EndActivity.this.startActivity(next);
+EndActivity.this.finish();
+return false;
+}
+});
+this.f1b.setText(DateFormat.getDateTimeInstance().format(new Date()));
+Intent intent2 = getIntent();
+String status = intent2.getStringExtra(this.key);
+String start = intent2.getStringExtra(this.key_3);
+this.f2c.setText(status);
+this.f0a.setText(start);
+}
+}
